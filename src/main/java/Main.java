@@ -1,8 +1,8 @@
-import shop.catalog.Catalog;
+import shop.catalog.ShopCatalog;
 import shop.catalog.Product;
-import shop.delivery.IDelivery;
+import shop.delivery.Delivery;
 import shop.delivery.ShopDelivery;
-import shop.shopping_cart.IShoppingCart;
+import shop.shopping_cart.ShoppingCart;
 import shop.shopping_cart.ProductsShoppingCart;
 
 import java.util.List;
@@ -13,17 +13,17 @@ public class Main {
         Product bread = new Product(Product.SpecificProduct.BREAD, 20, "Хлебопекарня");
         Product cheese = new Product(Product.SpecificProduct.CHEESE, 100, "Сыроварня");
 
-        Catalog catalog = Catalog.getInstance();
+        ShopCatalog catalog = ShopCatalog.getInstance();
         catalog.putProduct(bread, 4);
 
-        IShoppingCart shoppingCart = new ProductsShoppingCart(); //Dependency inversion principle
+        ShoppingCart shoppingCart = new ProductsShoppingCart(); //Dependency inversion principle
 
         shoppingCart.addProduct(catalog, bread); //DRY
         shoppingCart.addProduct(catalog, cheese); //DRY
         shoppingCart.addProduct(catalog, bread); //DRY
 
 
-        IDelivery delivery = new ShopDelivery(); //Single-Responsibility principle:
+        Delivery delivery = new ShopDelivery(); //Single-Responsibility principle:
         // класс отвечает только за доставку товаров магазина
         // + Dependency inversion principle
         shoppingCart.returnProduct(delivery, bread);

@@ -1,14 +1,14 @@
 package shop.shopping_cart;
 
-import shop.catalog.ICatalog;
+import shop.catalog.Catalog;
 import shop.catalog.Product;
-import shop.delivery.IDelivery;
+import shop.delivery.Delivery;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ProductsShoppingCart implements IShoppingCart {
+public class ProductsShoppingCart implements ShoppingCart {
 
     private List<Product> shoppingCart;
 
@@ -17,7 +17,7 @@ public class ProductsShoppingCart implements IShoppingCart {
     }
 
     @Override
-    public void addProduct(ICatalog catalog, Product product) {
+    public void addProduct(Catalog catalog, Product product) {
         if (catalog.getProducts().containsKey(product)) {
             shoppingCart.add(product);
             System.out.println("Товар " + product.getName() + " успешно добавлен в корзину!");
@@ -27,7 +27,7 @@ public class ProductsShoppingCart implements IShoppingCart {
     }
 
     @Override
-    public void returnProduct(IDelivery delivery, Product product) {
+    public void returnProduct(Delivery delivery, Product product) {
         if (shoppingCart.contains(product)) {
             shoppingCart.remove(product);
             delivery.refund(product);
@@ -35,7 +35,7 @@ public class ProductsShoppingCart implements IShoppingCart {
         }
     }
 
-    public List<Product> recommend(ICatalog catalog, String brand) {
+    public List<Product> recommend(Catalog catalog, String brand) {
         List<Product> recommendations = new ArrayList<>();
 
         for (Map.Entry<Product, Integer> entry : catalog.getProducts().entrySet()) {

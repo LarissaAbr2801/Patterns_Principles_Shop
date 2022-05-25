@@ -6,13 +6,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import shop.catalog.ShopCatalog;
 import shop.catalog.Catalog;
-import shop.catalog.ICatalog;
 import shop.catalog.Product;
-import shop.delivery.IDelivery;
+import shop.delivery.Delivery;
+import shop.delivery.ShopDelivery;
 import shop.shopping_cart.ProductsShoppingCart;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -32,13 +32,13 @@ public class ProductsShoppingCartTest {
 
     @ParameterizedTest
     @MethodSource("sourceTestReturnProduct")
-    void returnProduct(Product product) {
-        IDelivery delivery = Mockito.mock(IDelivery.class);
-
+    void testReturnProduct(Product product) {
+        Delivery delivery = Mockito.mock(Delivery.class);
+       
         ArgumentCaptor<Product> captor = ArgumentCaptor.forClass(Product.class);
 
         sut = new ProductsShoppingCart();
-        sut.returnProduct(delivery, product);
+        sut.returnProduct(delivery1, product);
 
         Mockito.verify(delivery).refund(captor.capture());
 
@@ -52,14 +52,14 @@ public class ProductsShoppingCartTest {
 
     @ParameterizedTest
     @MethodSource("sourceTestRecommend")
-    void testRecommend(Catalog catalog, String brand, List<Product> expected) {
+    void testRecommend(ShopCatalog catalog, String brand, List<Product> expected) {
         sut = new ProductsShoppingCart();
         List<Product> result = sut.recommend(catalog, brand);
         Assertions.assertEquals(result, expected);
     }
 
     private static Stream<Arguments> sourceTestRecommend() {
-        ICatalog catalog = Catalog.getInstance();
+        Catalog catalog = ShopCatalog.getInstance();
         catalog.putProduct(new Product(Product.SpecificProduct.CHEESE, 100, "DairyFarm"),
                 2);
         catalog.putProduct(new Product(Product.SpecificProduct.MILK, 50, "DairyFarm"), 0);

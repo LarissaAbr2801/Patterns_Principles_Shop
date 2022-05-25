@@ -2,7 +2,7 @@ package shop.delivery;
 
 import shop.catalog.Product;
 
-public class ShopDelivery implements IDelivery {
+public class ShopDelivery implements Delivery {
 
     @Override
     public String deliver(Product product) {
