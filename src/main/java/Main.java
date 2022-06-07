@@ -2,8 +2,8 @@ import shop.catalog.ShopCatalog;
 import shop.catalog.Product;
 import shop.delivery.Delivery;
 import shop.delivery.ShopDelivery;
-import shop.shopping_cart.ShoppingCart;
-import shop.shopping_cart.ProductsShoppingCart;
+import shop.shopping.cart.ShoppingCart;
+import shop.shopping.cart.ProductsShoppingCart;
 
 import java.util.List;
 

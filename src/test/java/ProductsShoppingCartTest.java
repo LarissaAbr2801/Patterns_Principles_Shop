@@ -10,8 +10,7 @@ import shop.catalog.ShopCatalog;
 import shop.catalog.Catalog;
 import shop.catalog.Product;
 import shop.delivery.Delivery;
-import shop.delivery.ShopDelivery;
-import shop.shopping_cart.ProductsShoppingCart;
+import shop.shopping.cart.ProductsShoppingCart;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -34,11 +33,16 @@ public class ProductsShoppingCartTest {
     @MethodSource("sourceTestReturnProduct")
     void testReturnProduct(Product product) {
         Delivery delivery = Mockito.mock(Delivery.class);
-       
+
         ArgumentCaptor<Product> captor = ArgumentCaptor.forClass(Product.class);
 
+        ShopCatalog catalog = new ShopCatalog();
+        catalog.putProduct(product, 2);
+
         sut = new ProductsShoppingCart();
-        sut.returnProduct(delivery1, product);
+        sut.addProduct(catalog, product);
+
+        sut.returnProduct(delivery, product);
 
         Mockito.verify(delivery).refund(captor.capture());
 

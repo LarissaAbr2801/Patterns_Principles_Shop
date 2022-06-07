@@ -1,4 +1,4 @@
-package shop.shopping_cart;
+package shop.shopping.cart;
 
 import shop.catalog.Catalog;
 import shop.catalog.Product;
